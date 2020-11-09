@@ -4,6 +4,7 @@ import {
   AccessibilityInfo,
   PanResponder,
   Animated,
+  TouchableOpacity,
   View,
   Text,
   Image
@@ -31,7 +32,7 @@ const WEEK_HEIGHT = 46;
 const HEADER_HEIGHT = 68;
 const DAY_NAMES_PADDING = 24;
 const CLOSED_HEIGHT = 120 - WEEK_HEIGHT - DAY_NAMES_PADDING; 
-const KNOB_CONTAINER_HEIGHT = 25;
+const KNOB_CONTAINER_HEIGHT = 30;
 
 /**
  * @description: Expandable calendar component
@@ -374,6 +375,16 @@ class ExpandableCalendar extends Component {
     }
   }
 
+  _toggleCalendar = () => {
+    setTimeout(() => { // to allows setDate to be completed
+      if (this.state.position === POSITIONS.OPEN) {
+        this.bounceToPosition(this.closedHeight);
+      } else {
+        this.bounceToPosition(this.openHeight);
+      }
+    }, 0);
+  }
+
   /** Renders */
 
   renderWeekDaysNames() {
@@ -411,12 +422,13 @@ class ExpandableCalendar extends Component {
     );
   }
 
+
   renderKnob() {
     // TODO: turn to TouchableOpacity with onPress that closes it
     return (
-      <View style={this.style.knobContainer} pointerEvents={'none'} testID={`${this.props.testID}-knob`}>
+      <TouchableOpacity activeOpacity={1} onPress={this._toggleCalendar} style={this.style.knobContainer} pointerEvents={'none'} testID={`${this.props.testID}-knob`}>
         <View style={this.style.knob} testID={CALENDAR_KNOB}/>
-      </View>
+      </TouchableOpacity>
     );
   }
 
