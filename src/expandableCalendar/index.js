@@ -1,3 +1,4 @@
+/* This is a modified version of the original calendar (Francesco Delogu 2020) */
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
